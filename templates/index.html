@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MCI Analysis and Flight Delay Prediction</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Matt Beirne">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- D3 -->    
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js">
+    </script>
+<!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+<!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<!-- =================================================================================
+============================================= Body ===============================
+================================================================================== -->
+<body>    
+    <section id = "home">
+        <main>
+            <div class="aboutGrid">
+                <div class="box">
+                    <h1>MCI Analysis</h1>
+                    <p> By: Matt Beirne</p> 
+                </div>
+                <div class="box">
+                    <h3>Welcome!</h3>
+                    <p>Here you will find three interactive analysis tools to help you decide when to schedule your flight.</p>
+                </div>
+                <div class="box">
+                    The map was made on Tableau. There you can view the delay rates by state with an associated table. Click on a state or change the filters to narrow your search.
+                </div>                       
+                <div class="box">
+                    The graphs were made with plotly. There you can view similar data.
+                </div>
+                <div class="box">
+                    The prediction section allows you to input your flight information and get a prediction if your flight will be delayed or on time.
+                </div>
+            </div>
+        </main>
+    </section>
+    <div class="container">
+        <!-- <button id='home-tab' class="tab">About</button> -->
+        <button id="map-tab" type="button" class="tab">Map</button>
+        <button id="table-tab" type="button"class="tab">Plots</button>
+        <button id="predict-tab" type="button" class="tab">Predict</button>
+    </div>
+<!-- =================================================================================
+============================================= Map Tab ================================
+================================================================================== -->
+    <section id = "map">
+        <header>
+            <h1></h1>
+            <p></p>
+        </header>
+        
+        <div class="mapGrid">
+            <div class = "tabwell">
+                <div class='tableauPlaceholder' id='viz1730753219767' style='position: relative'><noscript><a href='#'><img alt='MCI Flight History AnalysisIncludes all flights from 2021-2023 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;MC&#47;MCI_FlightStatus&#47;MCIFlightHistoryAnalysis&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='MCI_FlightStatus&#47;MCIFlightHistoryAnalysis' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;MC&#47;MCI_FlightStatus&#47;MCIFlightHistoryAnalysis&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1730753219767');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='600px';vizElement.style.height='987px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+            </div>    
+        </div>
+        
+    </section>
+<!-- =================================================================================
+===================================== Table/Graphs Tab ===============================
+================================================================================== -->
+    <section id = "table">
+        <div class="tableGrid">
+            <div class="plot">
+                <h1>Sort by</h1>
+                <select id="selSortBy" onchange="updatePlotly(this.value)"></select>
+            </div>
+            <div id="plot1" class="plot"></div>
+            <div id="plot2" class="plot"></div>
+        </div>
+        
+        <!-- <div id="plot3"></div> -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </section>
+<!-- =================================================================================
+============================================= Predict Tab ============================
+================================================================================== -->
+    <section id = "predict">
+        <header>
+            <h1>Predict</h1>
+            <p>Input your flight information below then press the 'Predict' button to get a prediction. 
+                Predictions >= 0.5 are categorized as delayed. Predictions < 0.5 are categorized as on time. </p>
+        </header>
+        <div class="predictGrid">
+            <div class="predictSubGrid">
+                <div class="car">
+                    Origin: <select id="selectOrigin"></select>, 
+                </div>
+                <div class="car">
+                    Destination: <select id="selectDest"></select>
+                </div>
+                <div class="car">
+                    Airline: <select id="selectAirline"></select>
+                </div>
+                <div class="car">
+                    Date:<input type="date" id="selectDate"></input> , 
+                </div>
+                <div class="car">
+                    Day of Week:<select id="selectDOW"></select>
+                </div>
+                <div class="car">
+                    Scheduled Depature Time: <input type="time" id="selectTime" ></input>
+                </div>    
+                <button type="button" id="submit" class="car">
+                    Predict
+                </button>
+            </div>
+            <div class="predictSubGrid">
+                
+                <div id="response">
+                    <h3 >This feature is not available here. To access this feature you can follow the link to my <a href="https://github.com/mbeirne11/MCI-Flight-status" target="_blank">github</a>, clone the repository and run the python app.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =================================================================================
+============================================= JavaScript files ============================
+================================================================================== -->
+    <script src="../static/js/app.js"></script>
+</body>
+</html>
