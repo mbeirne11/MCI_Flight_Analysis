@@ -6,11 +6,11 @@ import tensorflow as tf
 #create flask
 app = Flask(__name__)
 
-years_data = pd.read_csv('MCI-Flight-Analysis/Resources/years_data.csv')
-months_data = pd.read_csv('MCI-Flight-Analysis/Resources/months_data.csv')
-dows_data = pd.read_csv('MCI-Flight-Analysis/Resources\dows_data.csv')
-carriers_data = pd.read_csv('MCI-Flight-Analysis/Resources/airlines_data.csv')
-X = pd.read_csv('MCI-Flight-Analysis/Resources/X.csv')
+years_data = pd.read_csv('Resources/years_data.csv')
+months_data = pd.read_csv('Resources/months_data.csv')
+dows_data = pd.read_csv('Resources/dows_data.csv')
+carriers_data = pd.read_csv('Resources/airlines_data.csv')
+X = pd.read_csv('Resources/X.csv')
 
 #home route
 @app.route("/")
@@ -33,7 +33,7 @@ def get_dows_data():
 def get_carriers_data():
     return json_util.dumps(carriers_data)
 
-model = tf.keras.models.load_model('MCI-Flight-Analysis/Resources/nn_model.keras')
+model = tf.keras.models.load_model('Resources/nn_model.keras')
 # predict route that will post to the home route
 @app.route('/predict', methods=['POST'])
 def predict():
