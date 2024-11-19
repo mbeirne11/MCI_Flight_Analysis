@@ -48,7 +48,7 @@ dropDownOptions.forEach(header => {
     currentData.text(header)
 })
 function initTable() {
-    d3.csv("../Resources/years_data.csv").then(data => {
+    d3.csv("Resources/years_data.csv").then(data => {
         sortbys = []
         counts = []
         means = []
@@ -142,7 +142,7 @@ function updatePlotly() {
     }
     console.log(sortby)
     //Use D3 to get data from mongodb
-    d3.csv(`../Resources/${sortby.toLowerCase()}s_data.csv`).then(data => {
+    d3.csv(`Resources/${sortby.toLowerCase()}s_data.csv`).then(data => {
         var i = 0
         sortbys = []
         counts = []
