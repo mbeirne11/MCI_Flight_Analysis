@@ -56,29 +56,29 @@ function initTable() {
         Object.entries(data).forEach(element=>{            
             sortbys.push(element[1]['YEAR'])
             counts.push(element[1]['count'])
-            means.push(element[1]['mean'])
+            means.push(1-element[1]['mean'])
             
         })
         trace_counts = {
-            x: sortbys.slice(0,3),
-            y: counts.slice(0,3)
+            x: sortbys.slice(0,sortbys.length-1),
+            y: counts.slice(0,sortbys.length-1)
         }
         
         layout_counts = {
             title: 'Number of Flights',
             height: 400,
             xaxis: {
-                tickvals:[2021,2022,2023]
+                tickvals:[2018,2019,2020,2021,2022,2023,2024]
             }
         }
         trace_means = {
-            x: sortbys.slice(0,3),
-            y: means.slice(0,3)
+            x: sortbys.slice(0,sortbys.length-1),
+            y: means.slice(0,sortbys.length-1)
         }
         layout_means = {
             title: 'Average Delay Rate',
             xaxis: {
-                tickvals:[2021,2022,2023]
+                tickvals:[2018,2019,2020,2021,2022,2023,2024]
             },
             yaxis: {
                 tickformat: "%"
@@ -140,6 +140,9 @@ function updatePlotly() {
     if(sortby=='Day of the Week'){
         sortby='dow'
     }
+    if(sortby=='Airline'){
+        sortby='carrier'
+    }
     console.log(sortby)
     //Use D3 to get data from mongodb
     d3.csv(`Resources/${sortby.toLowerCase()}s_data.csv`).then(data => {
@@ -151,7 +154,7 @@ function updatePlotly() {
         if(sortby=='dow'){
             sortby='DAY_OF_WEEK'
         }
-        if(sortby=='Airline'){
+        if(sortby=='carrier'){
             sortby='MKT_UNIQUE_CARRIER'
         }
         Object.entries(data).forEach(element=>{  
@@ -159,7 +162,7 @@ function updatePlotly() {
                 console.log(element[1][1])         
                 sortbys.push(element[1][sortby.toUpperCase()])
                 counts.push(element[1]['count'])
-                means.push(element[1]['mean'])
+                means.push(1-element[1]['mean'])
             }
             i+1 
         })
